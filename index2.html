@@ -75,60 +75,47 @@
             background-color: #1ebc59;
             transform: scale(1.03);
         }
-		
+		@media (max-width: 768px){
+			.page-container{
+				grid-template-columns: 1fr;
+				width: 95%;
+			}
+		}
 			
 	</style>
 	</head>
 	<body>
-	<div class="page-container">
-	    <div class="column">
-			<div class="card">
-				<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Tops Men</strong></p>
-				<img src="topsmen.jpeg" alt="Tops">
-				<button class="order-btn" data-product="Men's Tops">Order on WhatsApp</button>
-            </div>
-			<div class="card">
-				<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Tops Women</strong></p>
-				<img src="topsLadies.jpeg" alt="Tops">
-				<button class="order-btn" data-product="Women's Tops">Order on WhatsApp</button>
-			</div>
-		</div>
-	<div class="column">
-	    <div class="card">
-			<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Bottoms Men</strong></p>
-			<img class="right-img" src="jeans.jpeg" alt="Tops">
-			<button class="order-btn" data-product="Men's Bottoms">Order on WhatsApp</button>
-        </div>
-		<div class="card">
-			<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Bottoms Women</strong></p>
-			<img class="right-img" src="ladiesbottoms.jpeg" alt="Tops">
-			<button class="order-btn" data-product="Women's Bottoms">Order on WhatsApp</button>
-		</div>
-	</div>
-	<div class="column">
-         <div class="card">	
-			<p style="color:white;font-size:150%;margin: 0 0 10px 0;"><strong>Get Your Collection</strong></p>
-			<img src="pile2.jpeg" alt="Description of the image" style="width: 100%; height: 40vh; display: block;">
-			<button class="order-btn" data-product="Collection">Order on WhatsApp</button>
-		</div>
-		<div class="card">
-			<p style="color:white;font-size:150%;margin: 0 0 10px 0;"><strong>Get Your Shoes</p></strong>
-			<img src="shoes.jpeg" alt="Description of the image" style="width: 100%; height: 40vh; display: block;">
-			<button class="order-btn" data-product="Shoes">Order on WhatsApp</button>
-        </div>
-       </div>
-     </div>	
-	
-	<script>
-        const phoneNumber = "27848711675"; // Replace with your WhatsApp number (no + sign)
+		<!-- This single container replaces all manually typed columns/cards -->
+		<div class="page-container" id="products-grid"></div>
 
-		 document.querySelectorAll('.order-btn').forEach(button => {
-			button.addEventListener('click', (e) => {
-			  const product = e.target.getAttribute('data-product');
-			  const message = encodeURIComponent(`Hi! I'm interested in ordering the ${product} from Retsales.sa.`);
-			  window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-            });
-        });
+		<script>
+			// Update this list whenever your stock changes
+			const products = [
+				{ name: "Men's Tops", price: "R150", img: "topsmen.jpeg" },
+				{ name: "Women's Tops", price: "R100", img: "topsLadies.jpeg" },
+				{ name: "Men's Bottoms", price: "R250", img: "jeans.jpeg" },
+				{ name: "Women's Bottoms", price: "R150", img: "ladiesbottoms.jpeg" },
+				{ name: "Special Collection", price: "R500", img: "pile2.jpeg" },
+				{ name: "Shoes", price: "R750", img: "shoes.jpeg" },
+				{ name: "Hoodies", price: "R300", img: "hoodies.jpeg"},
+			];
+
+			const phoneNumber = "27848711675";
+			const container = document.getElementById('products-grid');
+
+			// Dynamically create the HTML cards
+			container.innerHTML = products.map(item => `
+				<div class="card">
+					<p><strong>${item.name}</strong> (${item.price})</p>
+					<img src="${item.img}" alt="${item.name}">
+					<button class="order-btn" onclick="order('${item.name}', '${item.price}')">Order on WhatsApp</button>
+				</div>
+			`).join('');
+
+			function order(name, price) {
+				const message = encodeURIComponent(`Hi! I'm interested in ordering the ${name} (${price}) from Retsales.sa.`);
+				window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+			}
 </script>
 
 	</body>
