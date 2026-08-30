@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <meta charset="UTF-8">
+	    <title>Retsales.sa</title>
+	<style>
+	    body {
+			margin: 0;
+			min-height: 100vh;
+			position: relative;
+			overflow-x: hidden;
+         }
+
+           
+		body::before {
+			content: "";
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url('clothes2.jpeg');
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			filter: blur(8px); /* Change this number for more or less blur */
+			transform: scale(1.02); /* Hides white fuzzy edges caused by the blur */
+			z-index: -1; /* Pushes the background behind everything else */
+		}
+		.page-container{
+		    display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 25px;
+			width: 90%;
+			max-width: 1400px;
+			margin: 40px auto;
+		}
+		.column{
+		    display: flex;
+            flex-direction: column;
+            gap: 20px; /* Space between the two items in each column */
+		}
+		.card p{
+		    color: white;
+            font-size: 130%;
+            margin: 0 0 8px 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+		}
+		.card{
+		    text-align: center;
+		}
+		.card img{
+		    width: 100%;
+			height: 40vh;
+			object-fit: cover;
+			border-radius: 8px;
+			display: block;
+		}
+		
+			
+	</style>
+	</head>
+	<body>
+	<div class="page-container">
+	    <div class="column">
+			<div class="card">
+				<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Tops Men</strong></p>
+				<img src="topsmen.jpeg" alt="Tops">
+            </div>
+			<div class="card">
+				<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Tops Women</strong></p>
+				<img src="topsLadies.jpeg" alt="Tops">
+			</div>
+		</div>
+	<div class="column">
+	    <div class="card">
+			<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Bottoms Men</strong></p>
+			<img class="right-img" src="jeans.jpeg" alt="Tops">
+        </div>
+		<div class="card">
+			<p style="color:white; font-size: 150%; margin: 0 0 10px 0;"><strong>Get Your Bottoms Women</strong></p>
+			<img class="right-img" src="ladiesbottoms.jpeg" alt="Tops">
+		</div>
+	</div>
+	<div class="column">
+         <div class="card">	
+			<p style="color:white;font-size:150%;margin: 0 0 10px 0;"><strong>Get Your Collection</p></strong>
+			<img src="pile2.jpeg" alt="Description of the image" style="width: 100%; height: 40vh; display: block;">
+		</div>
+		<div class="class">
+			<p style="color:white;font-size:150%;margin: 0 0 10px 0;"><strong>Get Your Shoes</p></strong>
+			<img src="shoes.jpeg" alt="Description of the image" style="width: 100%; height: 40vh; display: block;">
+        </div>
+       </div>
+     </div>	
+	
+	</body>
+</html>
