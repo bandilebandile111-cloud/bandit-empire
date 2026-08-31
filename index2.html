@@ -1,66 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-	    <meta charset="UTF-8">
-	    <title>Retsales.sa</title>
-	<style>
-	    body {
-			margin: 0;
-			min-height: 100vh;
-			position: relative;
-			overflow-x: hidden;
-			font-family: Arial, sans-serif;
-         }
+<head>
+    <meta charset="UTF-8">
+    <title>Retsales.sa</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+        }
 
-           
-		body::before {
-			content: "";
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-image: url('clothes2.jpeg');
-			background-position: center;
-			background-size: cover;
-			background-repeat: no-repeat;
-			filter: blur(8px); /* Change this number for more or less blur */
-			transform: scale(1.02); /* Hides white fuzzy edges caused by the blur */
-			z-index: -1; /* Pushes the background behind everything else */
-		}
-		.page-container{
-		    display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 25px;
-			width: 90%;
-			max-width: 1400px;
-			margin: 40px auto;
-		}
-		.column{
-		    display: flex;
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('clothes2.jpeg');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: blur(8px);
+            transform: scale(1.02);
+            z-index: -1;
+        }
+
+        .page-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 90%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .card {
+            text-align: center;
+            display: flex;
             flex-direction: column;
-            gap: 20px; /* Space between the two items in each column */
-		}
-		.card p{
-		    color: white;
+            align-items: center;
+        }
+
+        .card p {
+            color: white;
             font-size: 130%;
             margin: 0 0 8px 0;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-		}
-		.card{
-		    text-align: center;
-			display: flex;
-            flex-direction: column;
-            align-items: center;
-		}
-		.card img{
-		    width: 100%;
-			height: 40vh;
-			object-fit: cover;
-			border-radius: 8px;
-			display: block;
-		}
-		.order-btn{
+        }
+
+        .card img {
+            width: 100%;
+            height: 40vh;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .order-btn {
             margin-top: 10px;
             padding: 10px 18px;
             background-color: #25D366;
@@ -71,52 +70,59 @@
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
-		.order-btn:hover{
+
+        .order-btn:hover {
             background-color: #1ebc59;
             transform: scale(1.03);
         }
-		@media (max-width: 768px){
-			.page-container{
-				grid-template-columns: 1fr;
-				width: 95%;
-			}
-		}
-			
-	</style>
-	</head>
-	<body>
-		<!-- This single container replaces all manually typed columns/cards -->
-		<div class="page-container" id="products-grid"></div>
 
-		<script>
-			// Update this list whenever your stock changes
-			const products = [
-				{ name: "Men's Tops", price: "R150", img: "topsmen.jpeg" },
-				{ name: "Women's Tops", price: "R100", img: "topsLadies.jpeg" },
-				{ name: "Men's Bottoms", price: "R250", img: "jeans.jpeg" },
-				{ name: "Women's Bottoms", price: "R150", img: "ladiesbottoms.jpeg" },
-				{ name: "Special Collection", price: "R500", img: "pile2.jpeg" },
-				{ name: "Shoes", price: "R750", img: "shoes.jpeg" },
-				{ name: "Hoodies", price: "R300", img: "hoodies.jpeg"},
-			];
+        @media (max-width: 768px) {
+            .page-container {
+                grid-template-columns: 1fr;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
 
-			const phoneNumber = "27848711675";
-			const container = document.getElementById('products-grid');
+    <div class="page-container" id="products-grid"></div>
 
-			// Dynamically create the HTML cards
-			container.innerHTML = products.map(item => `
-				<div class="card">
-					<p><strong>${item.name}</strong> (${item.price})</p>
-					<img src="${item.img}" alt="${item.name}">
-					<button class="order-btn" onclick="order('${item.name}', '${item.price}')">Order on WhatsApp</button>
-				</div>
-			`).join('');
+    <script>
+        const products = [
+            { name: "Men's Tops", price: "R150", img: "topsmen.jpeg" },
+            { name: "Women's Tops", price: "R100", img: "topsLadies.jpeg" },
+            { name: "Men's Bottoms", price: "R250", img: "jeans.jpeg" },
+            { name: "Women's Bottoms", price: "R150", img: "ladiesbottoms.jpeg" },
+            { name: "Special Collection", price: "R500", img: "pile2.jpeg" },
+            { name: "Shoes", price: "R750", img: "shoes.jpeg" },
+            { name: "Hoodies", price: "R300", img: "hoodies.jpeg" }
+        ];
 
-			function order(name, price) {
-				const message = encodeURIComponent(`Hi! I'm interested in ordering the ${name} (${price}) from Retsales.sa.`);
-				window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-			}
-</script>
+        const phoneNumber = "27848711675";
+        const container = document.getElementById('products-grid');
 
-	</body>
+        // Render cards with data-name and data-price attributes (safe from apostrophes)
+        container.innerHTML = products.map(item => `
+            <div class="card">
+                <p><strong>${item.name}</strong> (${item.price})</p>
+                <img src="${item.img}" alt="${item.name}">
+                <button class="order-btn" data-name="${item.name}" data-price="${item.price}">
+                    Order on WhatsApp
+                </button>
+            </div>
+        `).join('');
+
+        // Single clean click handler for all buttons
+        container.addEventListener('click', (e) => {
+            const btn = e.target.closest('.order-btn');
+            if (!btn) return;
+
+            const name = btn.dataset.name;
+            const price = btn.dataset.price;
+            const message = encodeURIComponent(`Hi! I'm interested in ordering the ${name} (${price}) from Retsales.sa.`);
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        });
+    </script>
+</body>
 </html>
