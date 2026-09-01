@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retsales.sa</title>
     <style>
         body {
@@ -11,6 +12,46 @@
             overflow-x: hidden;
             font-family: Arial, sans-serif;
         }
+		
+		/* Navigation Bar */
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px 5%;
+			background: rgba(0, 0, 0, 0.6);
+			backdrop-filter: blur(10px);
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.nav-logo {
+			color: #e5ff00; /* Streetwear yellow accent */
+			font-size: 1.4rem;
+			font-weight: bold;
+			text-decoration: none;
+			letter-spacing: 1.5px;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 20px;
+		}
+
+		.nav-links a {
+			color: #ffffff;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 0.95rem;
+			transition: color 0.2s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active {
+			color: #e5ff00;
+		}
 
         body::before {
             content: "";
@@ -28,13 +69,46 @@
             z-index: -1;
         }
 
+        /* Filter Buttons Bar */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px auto 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .card.hide {
+            display: none;
+        }
+
         .page-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             width: 90%;
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 30px auto 40px;
         }
 
         .card {
@@ -76,44 +150,86 @@
             transform: scale(1.03);
         }
 
-        @media (max-width: 768px) {
+        /* Tablet Adjustments */
+        @media (max-width: 992px) {
+            .page-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                width: 95%;
+            }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
             .page-container {
                 grid-template-columns: 1fr;
-                width: 95%;
+                gap: 20px;
+            }
+
+            .card img {
+                height: 300px;
+            }
+
+            .card p {
+                font-size: 1.1rem;
+            }
+
+            .order-btn {
+                width: 100%;
+                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
+    
+	<nav class="navbar">
+		<a href="index.html" class="nav-logo">RETSALES</a>
+		<div class="nav-links">
+			<a href="index.html">Home</a>
+			<a href="index2.html" class="active">Shop</a>
+		</div>
+    </nav>
+	
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="men">Men</button>
+        <button class="filter-btn" data-filter="women">Women</button>
+        <button class="filter-btn" data-filter="shoes">Shoes</button>
+    </div>
 
     <div class="page-container" id="products-grid"></div>
 
     <script>
         const products = [
-            { name: "Men's Tops", price: "R150", img: "topsmen.jpeg" },
-            { name: "Women's Tops", price: "R100", img: "topsLadies.jpeg" },
-            { name: "Men's Bottoms", price: "R250", img: "jeans.jpeg" },
-            { name: "Women's Bottoms", price: "R150", img: "ladiesbottoms.jpeg" },
-            { name: "Special Collection", price: "R500", img: "pile2.jpeg" },
-            { name: "Shoes", price: "R750", img: "shoes.jpeg" },
-            { name: "Hoodies", price: "R300", img: "hoodies.jpeg" }
+            { name: "Men's Tops", category: "men", price: "R150", img: "topsmen.jpeg" },
+            { name: "Women's Tops", category: "women", price: "R100", img: "topsLadies.jpeg" },
+            { name: "Men's Bottoms", category: "men", price: "R250", img: "jeans.jpeg" },
+            { name: "Women's Bottoms", category: "women", price: "R150", img: "ladiesbottoms.jpeg" },
+            { name: "Special Collection", category: "men women", price: "R500", img: "pile2.jpeg" },
+            { name: "Shoes", category: "shoes", price: "R750", img: "shoes.jpeg" },
+            { name: "Hoodies", category: "men women", price: "R300", img: "hoodies.jpeg" }
         ];
 
         const phoneNumber = "27848711675";
         const container = document.getElementById('products-grid');
 
-        // Render cards with data-name and data-price attributes (safe from apostrophes)
-        container.innerHTML = products.map(item => `
-            <div class="card">
-                <p><strong>${item.name}</strong> (${item.price})</p>
-                <img src="${item.img}" alt="${item.name}">
-                <button class="order-btn" data-name="${item.name}" data-price="${item.price}">
-                    Order on WhatsApp
-                </button>
-            </div>
-        `).join('');
+        // Render cards with data-category included
+        function renderProducts() {
+            container.innerHTML = products.map(item => `
+                <div class="card" data-category="${item.category}">
+                    <p><strong>${item.name}</strong> (${item.price})</p>
+                    <img src="${item.img}" alt="${item.name}">
+                    <button class="order-btn" data-name="${item.name}" data-price="${item.price}">
+                        Order on WhatsApp
+                    </button>
+                </div>
+            `).join('');
+        }
 
-        // Single clean click handler for all buttons
+        renderProducts();
+
+        // 1. WhatsApp Order Handler
         container.addEventListener('click', (e) => {
             const btn = e.target.closest('.order-btn');
             if (!btn) return;
@@ -122,6 +238,29 @@
             const price = btn.dataset.price;
             const message = encodeURIComponent(`Hi! I'm interested in ordering the ${name} (${price}) from Retsales.sa.`);
             window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        });
+
+        // 2. Category Filter Handler
+        const filterButtons = document.querySelectorAll(".filter-btn");
+
+        filterButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                filterButtons.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const selectedFilter = btn.getAttribute("data-filter");
+                const allCards = document.querySelectorAll(".card");
+
+                allCards.forEach((card) => {
+                    const cardCategory = card.getAttribute("data-category");
+
+                    if (selectedFilter === "all" || cardCategory.split(" ").includes(selectedFilter)) {
+                        card.classList.remove("hide");
+                    } else {
+                        card.classList.add("hide");
+                    }
+                });
+            });
         });
     </script>
 </body>
